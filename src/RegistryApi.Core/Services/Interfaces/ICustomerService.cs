@@ -1,4 +1,5 @@
-﻿using RegistryApi.Domain.Customers.Response;
+﻿using RegistryApi.Domain.Customers.Request;
+using RegistryApi.Domain.Customers.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace RegistryApi.Core.Services.Interfaces
 {
     public interface ICustomerService
     {
-        public List<CustomerResponse> FindAll(); 
+        public List<CustomerResponse> GetAll();
+        public CustomerResponse? GetByDocumentNumber(string documentNumber);
+        public CustomerResponse Add(CustomerRequest customerRequest);
+        public CustomerResponse Update(CustomerRequest customerRequest);
     }
 }

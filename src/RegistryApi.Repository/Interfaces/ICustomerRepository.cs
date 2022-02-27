@@ -10,5 +10,8 @@ namespace RegistryApi.Repository.Interfaces
     public interface ICustomerRepository
     {
         public List<CustomerData> FindAll();
+        public CustomerData FindByDocumentNumber(string documentNumber);
+        public CustomerData Insert(CustomerData customerData);
+        public CustomerData Update(CustomerData customerData);
     }
 }

@@ -15,10 +15,10 @@ namespace RegistryApi.Domain.Customers.Response
 
         public CustomerResponse(CustomerData customerData)
         {
-            this.DocumentNumber = customerData.DocumentNumber;
-            this.Name = customerData.Name;
-            this.CreatedAt = customerData.CreatedAt;
-            this.UpdatedAt = customerData.UpdatedAt;
+            DocumentNumber = customerData.DocumentNumber;
+            Name = customerData.Name;
+            CreatedAt = customerData.CreatedAt;
+            UpdatedAt = customerData.UpdatedAt;
         }
     }
 }

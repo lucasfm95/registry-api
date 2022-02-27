@@ -1,4 +1,7 @@
-﻿using RegistryApi.Domain.Customers.Data;
+﻿using MongoDB.Driver;
+using RegistryApi.Domain.Customers.Data;
+using RegistryApi.Repository.Factory;
+using RegistryApi.Repository.Factory.Interfaces;
 using RegistryApi.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,14 +13,66 @@ namespace RegistryApi.Repository
 {
     public class CustomerRespository : ICustomerRepository
     {
+        private readonly IMongoDatabase _database;
+
+        public CustomerRespository(IMongoDbClientFactory mongoDbClientFactory)
+        {
+            _database = mongoDbClientFactory.GetDatabase(MongoDbSettings.ConnectionString, MongoDbSettings.DataBaseName);
+        }
+
         public List<CustomerData> FindAll()
         {
-            var customers = new List<CustomerData>();
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
 
-            customers.Add(new CustomerData() { DocumentNumber = "09350460033", Name = "Harry Potter", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
-            customers.Add(new CustomerData() { DocumentNumber = "69054194006", Name = "Petter Parker", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now });
+                return collection.AsQueryable().ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
-            return customers;
+        public CustomerData FindByDocumentNumber(string documentNumber)
+        {
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+                var result = collection.Find(customer => customer.DocumentNumber == documentNumber);
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public CustomerData Insert(CustomerData customerData)
+        {
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+                collection.InsertOne(customerData);
+
+                return customerData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public CustomerData Update(CustomerData customerData)
+        {
+            var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+            var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
+
+            return customerData;
         }
     }
 }
