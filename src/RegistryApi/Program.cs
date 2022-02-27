@@ -1,4 +1,8 @@
+using RegistryApi.IoC;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddServicesSettings();
+builder.Services.AddRespositorySettings();
 
 // Add services to the container.
 
