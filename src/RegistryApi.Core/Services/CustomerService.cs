@@ -35,18 +35,23 @@ namespace RegistryApi.Core.Services
             return null;
         }
 
-        public CustomerResponse Add(CustomerRequest customerRequest)
+        public CustomerResponse Add(CustomerPostRequest customerRequest)
         {
             var customerData = new CustomerData(customerRequest);
+
+            customerData.CreatedAt = DateTime.Now;
+            customerData.UpdatedAt = customerData.CreatedAt;
 
             var result = _customerRepository.Insert(customerData);
 
             return new CustomerResponse(result);
         }
 
-        public CustomerResponse Update(CustomerRequest customerRequest)
+        public CustomerResponse Update(CustomerPutRequest customerRequest)
         {
             var customerData = new CustomerData(customerRequest);
+
+            customerData.UpdatedAt = DateTime.Now;
 
             var result = _customerRepository.Update(customerData);
 
@@ -62,7 +67,7 @@ namespace RegistryApi.Core.Services
 
         public bool Disable(string documentNumber)
         {
-            var result = _customerRepository.Disable(documentNumber);
+            var result = _customerRepository.Disable(documentNumber, DateTime.Now);
 
             return result;
         }

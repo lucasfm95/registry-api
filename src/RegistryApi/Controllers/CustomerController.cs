@@ -36,15 +36,20 @@ namespace RegistryApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CustomerRequest customerRequest)
+        public IActionResult Post([FromBody] CustomerPostRequest customerRequest)
         {
+            var customer = _customerService.GetByDocumentNumber(customerRequest.DocumentNumber ?? "");
+
+            if (customer is not null)
+                return BadRequest(new { errorMessage = $"documentNumber {customer?.DocumentNumber} already exists" });
+
             var result = _customerService.Add(customerRequest);
 
             return Ok(result);
         }
 
         [HttpPut("{documentNumber}")]
-        public IActionResult Put([FromRoute] string documentNumber, [FromBody] CustomerRequest customerRequest)
+        public IActionResult Put([FromRoute] string documentNumber, [FromBody] CustomerPutRequest customerRequest)
         {
             customerRequest.DocumentNumber = documentNumber;
 

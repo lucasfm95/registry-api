@@ -17,13 +17,18 @@ namespace RegistryApi.Domain.Customers.Data
 
         }
 
-        public CustomerData(CustomerRequest customerRequest)
+        public CustomerData(CustomerPostRequest customerRequest)
         {
             DocumentNumber = customerRequest.DocumentNumber;
             Name = customerRequest.Name;
             Enabled = customerRequest.Enabled;
-            CreatedAt = customerRequest.CreatedAt;
-            UpdatedAt = customerRequest.UpdatedAt;
+        }
+
+        public CustomerData(CustomerPutRequest customerRequest)
+        {
+            DocumentNumber = customerRequest.DocumentNumber;
+            Name = customerRequest.Name;
+            Enabled = customerRequest.Enabled.HasValue ? customerRequest.Enabled.Value : false;
         }
 
         [BsonId]

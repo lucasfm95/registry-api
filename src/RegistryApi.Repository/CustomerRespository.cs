@@ -71,11 +71,12 @@ namespace RegistryApi.Repository
         {
             try
             {
-                var id = FindByDocumentNumber(customerData.DocumentNumber ?? "").Id;
+                var customer = FindByDocumentNumber(customerData.DocumentNumber ?? "");
 
                 var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
 
-                customerData.Id = id;
+                customerData.Id = customer.Id;
+                customerData.CreatedAt = customer.CreatedAt;
 
                 var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
 
@@ -103,13 +104,14 @@ namespace RegistryApi.Repository
             }
         }
 
-        public bool Disable(string documentNumber)
+        public bool Disable(string documentNumber, DateTime updatedAt)
         {
             try
             {
                 var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
 
-                var update = Builders<CustomerData>.Update.Set(customer => customer.Enabled, false);
+                var update = Builders<CustomerData>.Update.Set(customer => customer.Enabled, false)
+                    .Set(customer => customer.UpdatedAt, updatedAt);
                 var filter = Builders<CustomerData>.Filter.Eq(customer => customer.DocumentNumber, documentNumber);
                 var options = new UpdateOptions { IsUpsert = true };
 

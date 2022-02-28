@@ -12,8 +12,8 @@ namespace RegistryApi.Core.Services.Interfaces
     {
         public List<CustomerResponse> GetAll();
         public CustomerResponse? GetByDocumentNumber(string documentNumber);
-        public CustomerResponse Add(CustomerRequest customerRequest);
-        public CustomerResponse Update(CustomerRequest customerRequest);
+        public CustomerResponse Add(CustomerPostRequest customerRequest);
+        public CustomerResponse Update(CustomerPutRequest customerRequest);
         public bool Delete(string documentNumber);
         public bool Disable(string documentNumber);
     }
