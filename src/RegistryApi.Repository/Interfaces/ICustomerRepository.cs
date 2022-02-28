@@ -13,5 +13,7 @@ namespace RegistryApi.Repository.Interfaces
         public CustomerData FindByDocumentNumber(string documentNumber);
         public CustomerData Insert(CustomerData customerData);
         public CustomerData Update(CustomerData customerData);
+        public bool Delete(string documentNumber);
+        public bool Disable(string documentNumber);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
@@ -68,11 +69,58 @@ namespace RegistryApi.Repository
 
         public CustomerData Update(CustomerData customerData)
         {
-            var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+            try
+            {
+                var id = FindByDocumentNumber(customerData.DocumentNumber ?? "").Id;
 
-            var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
 
-            return customerData;
+                customerData.Id = id;
+
+                var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
+
+                return customerData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool Delete(string documentNumber)
+        {
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+                var result = collection.DeleteOne(customer => customer.DocumentNumber == documentNumber);
+
+                return result.DeletedCount > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool Disable(string documentNumber)
+        {
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+                var update = Builders<CustomerData>.Update.Set(customer => customer.Enabled, false);
+                var filter = Builders<CustomerData>.Filter.Eq(customer => customer.DocumentNumber, documentNumber);
+                var options = new UpdateOptions { IsUpsert = true };
+
+                var result = collection.UpdateOne(filter, update, options);
+
+                return result.ModifiedCount > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -52,5 +52,25 @@ namespace RegistryApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete("{documentNumber}")]
+        public IActionResult Delete([FromRoute] string documentNumber)
+        {
+            var result = _customerService.Delete(documentNumber);
+
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
+
+        [HttpPatch("Disable/{documentNumber}")]
+        public IActionResult Disable([FromRoute] string documentNumber)
+        {
+            var result = _customerService.Disable(documentNumber);
+
+            if (result)
+                return Ok();
+            return BadRequest();
+        }
     }
 }

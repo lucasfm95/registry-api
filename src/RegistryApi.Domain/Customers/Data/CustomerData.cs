@@ -21,6 +21,7 @@ namespace RegistryApi.Domain.Customers.Data
         {
             DocumentNumber = customerRequest.DocumentNumber;
             Name = customerRequest.Name;
+            Enabled = customerRequest.Enabled;
             CreatedAt = customerRequest.CreatedAt;
             UpdatedAt = customerRequest.UpdatedAt;
         }
@@ -31,6 +32,7 @@ namespace RegistryApi.Domain.Customers.Data
         public string? Id { get; set; }
         public string? DocumentNumber { get; set; }
         public string? Name { get; set; }
+        public bool Enabled { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

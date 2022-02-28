@@ -17,6 +17,7 @@ namespace RegistryApi.Domain.Customers.Response
         {
             DocumentNumber = customerData.DocumentNumber;
             Name = customerData.Name;
+            Enabled = customerData.Enabled;
             CreatedAt = customerData.CreatedAt;
             UpdatedAt = customerData.UpdatedAt;
         }

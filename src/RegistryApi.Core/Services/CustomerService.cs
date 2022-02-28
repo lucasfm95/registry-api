@@ -52,5 +52,19 @@ namespace RegistryApi.Core.Services
 
             return new CustomerResponse(result);
         }
+
+        public bool Delete(string documentNumber)
+        {
+            var result = _customerRepository.Delete(documentNumber);
+
+            return result;
+        }
+
+        public bool Disable(string documentNumber)
+        {
+            var result = _customerRepository.Disable(documentNumber);
+
+            return result;
+        }
     }
 }
