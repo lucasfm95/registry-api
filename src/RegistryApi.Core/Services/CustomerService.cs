@@ -3,21 +3,19 @@ using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace RegistryApi.Core.Services
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        public List<string> ErrorsMessages { get; set; }
 
         public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
+            ErrorsMessages = new List<string>();
         }
         public List<CustomerResponse> GetAll()
         {
@@ -35,7 +33,7 @@ namespace RegistryApi.Core.Services
             return null;
         }
 
-        public CustomerResponse Add(CustomerPostRequest customerRequest)
+        public CustomerResponse? Add(CustomerPostRequest customerRequest)
         {
             var customerData = new CustomerData(customerRequest);
 
@@ -44,10 +42,14 @@ namespace RegistryApi.Core.Services
 
             var result = _customerRepository.Insert(customerData);
 
-            return new CustomerResponse(result);
+            if (result is not null)
+                return new CustomerResponse(result);
+
+            ErrorsMessages.Add($"Error to insert the customer -> { JsonSerializer.Serialize(customerData) }");
+            return null;
         }
 
-        public CustomerResponse Replace(CustomerPutRequest customerRequest)
+        public CustomerResponse? Replace(CustomerPutRequest customerRequest)
         {
             var customerData = new CustomerData(customerRequest);
 
@@ -55,7 +57,11 @@ namespace RegistryApi.Core.Services
 
             var result = _customerRepository.Replace(customerData);
 
-            return new CustomerResponse(result);
+            if (result is not null)
+                return new CustomerResponse(result);
+
+            ErrorsMessages.Add($"Error to replace the customer -> {JsonSerializer.Serialize(customerData)}");
+            return null;
         }
 
         public bool Update(CustomerPatchRequest customerRequest)
@@ -83,9 +89,23 @@ namespace RegistryApi.Core.Services
             return result;
         }
 
+        public bool ValideteDuplicateDocumentNumber(string documentNumber)
+        {
+            var customer = GetByDocumentNumber(documentNumber);
+            if (customer is null)
+                return false;
+
+            ErrorsMessages.Add($"Document number {documentNumber} is duplicated");
+            return true;
+        }
+
         public bool ValidatePatchUpdate(CustomerPatchRequest customer)
         {
-            return (customer.Name is not null || customer.Enabled is not null);
+            if(customer.Name is not null || customer.Enabled is not null)
+                return true;
+
+            ErrorsMessages.Add("Name or enabled field is required");
+            return false;
         }
     }
 }

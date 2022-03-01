@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Customers.Request;
+using RegistryApi.Domain.Response;
+using System.Net;
 
 namespace RegistryApi.Controllers
 {
@@ -38,14 +40,15 @@ namespace RegistryApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CustomerPostRequest customerRequest)
         {
-            var customer = _customerService.GetByDocumentNumber(customerRequest.DocumentNumber ?? "");
-
-            if (customer is not null)
-                return BadRequest(new { errorMessage = $"documentNumber {customer?.DocumentNumber} already exists" });
+            if (_customerService.ValideteDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
+                return BadRequest(new ErrorResponse 
+                { StatusCode = HttpStatusCode.BadRequest, Description = "value duplicated", ErrorsMessages = _customerService.ErrorsMessages });
 
             var result = _customerService.Add(customerRequest);
 
-            return Ok(result);
+            if (result is not null)
+                return Ok(result);
+            return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to insert customer", ErrorsMessages = _customerService.ErrorsMessages });
         }
 
         [HttpPut("{documentNumber}")]
@@ -55,20 +58,22 @@ namespace RegistryApi.Controllers
 
             var result = _customerService.Replace(customerRequest);
 
-            return Ok(result);
+            if(result is not null)
+                return Ok(result);
+            return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to update customer", ErrorsMessages = _customerService.ErrorsMessages });
         }
 
         [HttpPatch("{documentNumber}")]
         public IActionResult Patch([FromRoute] string documentNumber, [FromBody] CustomerPatchRequest customerRequest)
         {
             if (!_customerService.ValidatePatchUpdate(customerRequest))
-                return BadRequest();
+                return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "The field is required", ErrorsMessages = _customerService.ErrorsMessages });
             customerRequest.DocumentNumber = documentNumber;
             var result = _customerService.Update(customerRequest);
 
             if(result)
                 return Ok();
-            return BadRequest();
+            return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to update customer" });
         }
 
         [HttpDelete("{documentNumber}")]
@@ -78,7 +83,7 @@ namespace RegistryApi.Controllers
 
             if (result)
                 return Ok();
-            return BadRequest();
+            return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to delete customer" });
         }
 
         [HttpPatch("Disable/{documentNumber}")]
@@ -88,7 +93,7 @@ namespace RegistryApi.Controllers
 
             if (result)
                 return Ok();
-            return BadRequest();
+            return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to disable customer" });
         }
     }
 }

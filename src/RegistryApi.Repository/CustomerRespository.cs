@@ -1,14 +1,8 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
 using RegistryApi.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RegistryApi.Repository
 {
@@ -103,7 +97,7 @@ namespace RegistryApi.Repository
                     updateDefinitions.Add(Builders<CustomerData>.Update.Set(customer => customer.Name, customerData.Name));
                 }
 
-                if(customerData.Enabled.HasValue)
+                if (customerData.Enabled.HasValue)
                 {
                     updateDefinitions.Add(Builders<CustomerData>.Update.Set(customer => customer.Enabled, customerData.Enabled ?? false));
                 }
