@@ -17,8 +17,8 @@ namespace RegistryApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() {
-
+        public IActionResult GetAll() 
+        {
             var customers = _customerService.GetAll();
 
             return Ok(customers);
@@ -53,9 +53,22 @@ namespace RegistryApi.Controllers
         {
             customerRequest.DocumentNumber = documentNumber;
 
-            var result = _customerService.Update(customerRequest);
+            var result = _customerService.Replace(customerRequest);
 
             return Ok(result);
+        }
+
+        [HttpPatch("{documentNumber}")]
+        public IActionResult Patch([FromRoute] string documentNumber, [FromBody] CustomerPatchRequest customerRequest)
+        {
+            if (!_customerService.ValidatePatchUpdate(customerRequest))
+                return BadRequest();
+            customerRequest.DocumentNumber = documentNumber;
+            var result = _customerService.Update(customerRequest);
+
+            if(result)
+                return Ok();
+            return BadRequest();
         }
 
         [HttpDelete("{documentNumber}")]

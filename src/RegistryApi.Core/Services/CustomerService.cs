@@ -47,7 +47,18 @@ namespace RegistryApi.Core.Services
             return new CustomerResponse(result);
         }
 
-        public CustomerResponse Update(CustomerPutRequest customerRequest)
+        public CustomerResponse Replace(CustomerPutRequest customerRequest)
+        {
+            var customerData = new CustomerData(customerRequest);
+
+            customerData.UpdatedAt = DateTime.Now;
+
+            var result = _customerRepository.Replace(customerData);
+
+            return new CustomerResponse(result);
+        }
+
+        public bool Update(CustomerPatchRequest customerRequest)
         {
             var customerData = new CustomerData(customerRequest);
 
@@ -55,7 +66,7 @@ namespace RegistryApi.Core.Services
 
             var result = _customerRepository.Update(customerData);
 
-            return new CustomerResponse(result);
+            return result;
         }
 
         public bool Delete(string documentNumber)
@@ -70,6 +81,11 @@ namespace RegistryApi.Core.Services
             var result = _customerRepository.Disable(documentNumber, DateTime.Now);
 
             return result;
+        }
+
+        public bool ValidatePatchUpdate(CustomerPatchRequest customer)
+        {
+            return (customer.Name is not null || customer.Enabled is not null);
         }
     }
 }

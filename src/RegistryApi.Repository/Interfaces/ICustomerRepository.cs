@@ -12,7 +12,8 @@ namespace RegistryApi.Repository.Interfaces
         public List<CustomerData> FindAll();
         public CustomerData FindByDocumentNumber(string documentNumber);
         public CustomerData Insert(CustomerData customerData);
-        public CustomerData Update(CustomerData customerData);
+        public CustomerData Replace(CustomerData customerData);
+        public bool Update(CustomerData customerData);
         public bool Delete(string documentNumber);
         public bool Disable(string documentNumber, DateTime updatedAt);
     }

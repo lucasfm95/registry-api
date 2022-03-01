@@ -67,7 +67,7 @@ namespace RegistryApi.Repository
             }
         }
 
-        public CustomerData Update(CustomerData customerData)
+        public CustomerData Replace(CustomerData customerData)
         {
             try
             {
@@ -81,6 +81,40 @@ namespace RegistryApi.Repository
                 var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
 
                 return customerData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool Update(CustomerData customerData)
+        {
+            try
+            {
+                var collection = _database.GetCollection<CustomerData>(MongoDbSettings.CustomersCollectionName);
+
+                var filter = Builders<CustomerData>.Filter.Eq(customer => customer.DocumentNumber, customerData.DocumentNumber);
+
+                var updateDefinitions = new List<UpdateDefinition<CustomerData>>();
+
+                if (!string.IsNullOrEmpty(customerData.Name))
+                {
+                    updateDefinitions.Add(Builders<CustomerData>.Update.Set(customer => customer.Name, customerData.Name));
+                }
+
+                if(customerData.Enabled.HasValue)
+                {
+                    updateDefinitions.Add(Builders<CustomerData>.Update.Set(customer => customer.Enabled, customerData.Enabled ?? false));
+                }
+
+                updateDefinitions.Add(Builders<CustomerData>.Update.Set(customer => customer.UpdatedAt, customerData.UpdatedAt));
+
+                var combinedUpdate = Builders<CustomerData>.Update.Combine(updateDefinitions);
+
+                var result = collection.UpdateOne(filter, combinedUpdate);
+
+                return result.ModifiedCount > 0;
             }
             catch (Exception)
             {
