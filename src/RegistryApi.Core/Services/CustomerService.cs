@@ -2,6 +2,7 @@
 using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
+using RegistryApi.Domain.Request;
 using RegistryApi.Repository.Interfaces;
 using System.Text.Json;
 
@@ -17,9 +18,9 @@ namespace RegistryApi.Core.Services
             _customerRepository = customerRepository;
             ErrorsMessages = new List<string>();
         }
-        public List<CustomerResponse> GetAll()
+        public List<CustomerResponse> GetAll(PaginationRequest pagination)
         {
-            var customersData = _customerRepository.FindAll();
+            var customersData = _customerRepository.FindAll(pagination);
 
             return customersData.Select(customer => new CustomerResponse(customer)).ToList();
         }
