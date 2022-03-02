@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Customers.Request;
+using RegistryApi.Domain.Request;
 using RegistryApi.Domain.Response;
 using System.Net;
 
@@ -19,9 +20,9 @@ namespace RegistryApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() 
+        public IActionResult GetAll([FromQuery] PaginationRequest pagination) 
         {
-            var customers = _customerService.GetAll();
+            var customers = _customerService.GetAll(pagination);
 
             return Ok(customers);
         }
