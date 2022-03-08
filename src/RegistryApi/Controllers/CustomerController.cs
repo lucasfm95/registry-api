@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Customers.Request;
@@ -8,6 +9,7 @@ using System.Net;
 
 namespace RegistryApi.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
