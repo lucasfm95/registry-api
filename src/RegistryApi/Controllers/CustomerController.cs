@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Customers.Request;
@@ -22,7 +21,7 @@ namespace RegistryApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll([FromQuery] PaginationRequest pagination) 
+        public IActionResult GetAll([FromQuery] PaginationRequest pagination)
         {
             var customers = _customerService.GetAll(pagination);
 
@@ -34,7 +33,7 @@ namespace RegistryApi.Controllers
         {
             var customer = _customerService.GetByDocumentNumber(documentNumber);
 
-            if(customer is not null)
+            if (customer is not null)
                 return Ok(customer);
 
             return NoContent();
@@ -44,7 +43,7 @@ namespace RegistryApi.Controllers
         public IActionResult Post([FromBody] CustomerPostRequest customerRequest)
         {
             if (_customerService.ValideteDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
-                return BadRequest(new ErrorResponse 
+                return BadRequest(new ErrorResponse
                 { StatusCode = HttpStatusCode.BadRequest, Description = "value duplicated", ErrorsMessages = _customerService.ErrorsMessages });
 
             var result = _customerService.Add(customerRequest);
@@ -61,7 +60,7 @@ namespace RegistryApi.Controllers
 
             var result = _customerService.Replace(customerRequest);
 
-            if(result is not null)
+            if (result is not null)
                 return Ok(result);
             return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to update customer", ErrorsMessages = _customerService.ErrorsMessages });
         }
@@ -74,7 +73,7 @@ namespace RegistryApi.Controllers
             customerRequest.DocumentNumber = documentNumber;
             var result = _customerService.Update(customerRequest);
 
-            if(result)
+            if (result)
                 return Ok();
             return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to update customer" });
         }
