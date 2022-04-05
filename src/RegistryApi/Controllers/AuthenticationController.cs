@@ -5,7 +5,7 @@ namespace RegistryApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TokenController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpGet]
