@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistryApi.Domain.Customers.Request
+namespace RegistryApi.Domain.Customers.Requests
 {
     public class CustomerPostRequest
     {

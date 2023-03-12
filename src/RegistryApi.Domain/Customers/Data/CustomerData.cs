@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using RegistryApi.Domain.Customers.Request;
+using RegistryApi.Domain.Customers.Requests;
 using System.Text.Json.Serialization;
 
 namespace RegistryApi.Domain.Customers.Data

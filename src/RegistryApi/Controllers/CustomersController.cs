@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
-using RegistryApi.Domain.Customers.Request;
+using RegistryApi.Domain.Customers.Requests;
 using RegistryApi.Domain.Request;
 using RegistryApi.Domain.Response;
 using System.Net;
@@ -9,7 +9,7 @@ using System.Net;
 namespace RegistryApi.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {

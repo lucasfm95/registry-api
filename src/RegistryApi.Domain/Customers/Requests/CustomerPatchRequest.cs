@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace RegistryApi.Domain.Customers.Request
+namespace RegistryApi.Domain.Customers.Requests
 {
     public class CustomerPatchRequest
     {
