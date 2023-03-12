@@ -1,11 +1,6 @@
-﻿using RegistryApi.Domain.Customers.Request;
+﻿using RegistryApi.Domain.Customers.Requests;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Domain.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RegistryApi.Core.Services.Interfaces
 {
