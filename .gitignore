@@ -2,3 +2,6 @@
 
 .vs
 /src/RegistryApi/Properties/launchSettings.json
+
+.idea
+/RegistryApi.Tests/obj
