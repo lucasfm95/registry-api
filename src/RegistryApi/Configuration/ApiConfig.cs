@@ -8,7 +8,7 @@ namespace RegistryApi.Configuration
         {
             services
                 .AddControllers()
-                .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull); ;
+                .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
             return services;
         }

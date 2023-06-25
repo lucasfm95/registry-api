@@ -18,8 +18,10 @@ namespace RegistryApi.Configuration
 
         public static IServiceCollection AddRepositoriesResolveDependencies(this IServiceCollection services)
         {
+            services.AddHttpClient<HttpService>();
             services.AddSingleton<IMongoDbClientFactory, MongoDbClientFactory>();
             services.AddSingleton<ICustomerRepository, CustomerRespository>();
+            services.AddTransient<IHttpService, HttpService>();
 
             return services;
         }
