@@ -2,6 +2,10 @@
 
 This app is being developed because I would like to improve my skills with .NET.
 
+# Swagger documentation
+
+Open this url http://localhost:5000/docs to acess swagger documentiton
+
 # Exemple launchSettings.json 
 
 ```
@@ -29,7 +33,6 @@ This app is being developed because I would like to improve my skills with .NET.
 
 ```
 
-
 # How to execute application with docker
 
 ## steps:
@@ -49,7 +52,7 @@ docker run --name registry-api -p 5000:80 -d registry-api
 ```
 
 To acess the aplication documentation:
-http://localhost:5000/swagger
+http://localhost:5000/docs
 
 To acess the aplication health check:
 http://localhost:5000/healthcheck
