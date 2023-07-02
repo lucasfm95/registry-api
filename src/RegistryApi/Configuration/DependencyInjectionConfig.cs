@@ -20,7 +20,7 @@ namespace RegistryApi.Configuration
         {
             services.AddHttpClient<HttpService>();
             services.AddSingleton<IMongoDbClientFactory, MongoDbClientFactory>();
-            services.AddSingleton<ICustomerRepository, CustomerRespository>();
+            services.AddSingleton<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IHttpService, HttpService>();
 
             return services;

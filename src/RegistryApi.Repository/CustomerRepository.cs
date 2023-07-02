@@ -7,11 +7,11 @@ using RegistryApi.Repository.Interfaces;
 
 namespace RegistryApi.Repository
 {
-    public class CustomerRespository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly IMongoDatabase _database;
 
-        public CustomerRespository(IMongoDbClientFactory mongoDbClientFactory)
+        public CustomerRepository(IMongoDbClientFactory mongoDbClientFactory)
         {
             _database = mongoDbClientFactory.GetDatabase(MongoDbSettings.ConnectionString, MongoDbSettings.DataBaseName);
         }
@@ -75,7 +75,7 @@ namespace RegistryApi.Repository
                 customerData.Id = customer.Id;
                 customerData.CreatedAt = customer.CreatedAt;
 
-                var result = collection.ReplaceOne(customer => customer.DocumentNumber == customerData.DocumentNumber, customerData);
+                var result = collection.ReplaceOne(ctm => ctm.DocumentNumber == customerData.DocumentNumber, customerData);
 
                 return customerData;
             }
