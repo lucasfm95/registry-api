@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
-using RegistryApi.Domain.Customers.Requests;
 using RegistryApi.Domain.Request;
 using RegistryApi.Domain.Response;
 using System.Net;
+using RegistryApi.Domain.Customers.Request;
 
 namespace RegistryApi.Controllers
 {

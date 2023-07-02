@@ -1,4 +1,4 @@
-﻿using RegistryApi.Domain.Customers.Requests;
+﻿using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Domain.Request;
 

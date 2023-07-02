@@ -29,4 +29,7 @@
     <Folder Include="Domain\" />
     <Folder Include="Domain\Requests\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="UnitTest1.cs" />
+  </ItemGroup>
 </Project>

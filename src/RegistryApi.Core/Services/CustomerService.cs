@@ -1,6 +1,6 @@
 ﻿using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Customers.Data;
-using RegistryApi.Domain.Customers.Requests;
+using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Domain.Request;
 using RegistryApi.Repository.Interfaces;
