@@ -2,6 +2,34 @@
 
 This app is being developed because I would like to improve my skills with .NET.
 
+# Exemple launchSettings.json 
+
+```
+{
+  "profiles": {
+    "RegistryApi": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "",
+        "CONNECTION_STRING_MONGODB": "",
+        "DATABASE_NAME": "",
+        "CUSTOMERS_COLLECTION_NAME": "",
+        "PRODUCT_COLLECTION_NAME": "",
+        "AUTH0_AUTHORITY": "",
+        "AUTH0_AUDIENCE": "",
+        "AUTH0_CLIENT_ID": "",
+        "AUTH0_CLIENT_SECRET": "",
+        "AUTHORIZATION_KEY": ""
+      }
+    }
+  }
+}
+
+```
+
+
 # How to execute application with docker
 
 ## steps:
