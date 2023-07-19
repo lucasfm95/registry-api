@@ -11,18 +11,20 @@ namespace RegistryApi.Configuration
     {
         public static IServiceCollection AddServicesResolveDependencies(this IServiceCollection services)
         {
+            services.AddHttpClient<HttpService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IHttpService, HttpService>();
 
             return services;   
         }
 
         public static IServiceCollection AddRepositoriesResolveDependencies(this IServiceCollection services)
         {
-            services.AddHttpClient<HttpService>();
             services.AddSingleton<IMongoDbClientFactory, MongoDbClientFactory>();
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IHttpService, HttpService>();
-
+            services.AddSingleton<IProductRepository, ProductRepository>();
+            
             return services;
         }
     }

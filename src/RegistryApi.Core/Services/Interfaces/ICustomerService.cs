@@ -14,7 +14,7 @@ namespace RegistryApi.Core.Services.Interfaces
         public bool Update(CustomerPatchRequest customerRequest);
         public bool Delete(string documentNumber);
         public bool Disable(string documentNumber);
-        public bool ValideteDuplicateDocumentNumber(string documentNumber);
+        public bool ValidateDuplicateDocumentNumber(string documentNumber);
         public bool ValidatePatchUpdate(CustomerPatchRequest customer);
     }
 }

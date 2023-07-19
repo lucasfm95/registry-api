@@ -1,3 +1,5 @@
+using RegistryApi.Domain.Products.Request;
+
 namespace RegistryApi.Domain.Products.Data;
 
 public class ProductData
@@ -10,4 +12,13 @@ public class ProductData
     public bool? Enabled { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public ProductData() { }
+    public ProductData(ProductPostRequest productPostRequest)
+    {
+        Branch = productPostRequest.Branch;
+        Model = productPostRequest.Model;
+        Description = productPostRequest.Description;
+        Value = productPostRequest.Value;
+        Enabled = productPostRequest.Enabled;
+    }
 }

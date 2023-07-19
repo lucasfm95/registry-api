@@ -90,7 +90,7 @@ namespace RegistryApi.Core.Services
             return result;
         }
 
-        public bool ValideteDuplicateDocumentNumber(string documentNumber)
+        public bool ValidateDuplicateDocumentNumber(string documentNumber)
         {
             var customer = GetByDocumentNumber(documentNumber);
             if (customer is null)

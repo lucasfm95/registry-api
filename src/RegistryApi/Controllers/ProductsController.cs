@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Domain.Products.Request;
+using RegistryApi.Domain.Request;
 
 namespace RegistryApi.Controllers
 {
@@ -15,19 +16,26 @@ namespace RegistryApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] PaginationRequest pagination)
         {
-            return Ok("Ok");
+            var result = _productService.GetAll(pagination);
+
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+
+            return NoContent();
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] ProductPostRequest productPostRequest)
         {
-            var result = _productService;//.Add(productPostRequest);
+            var result = _productService.Add(productPostRequest);
 
             if (result is not null)
             {
-                return Ok("Ok");
+                return Ok(result);
             }
 
             return BadRequest();

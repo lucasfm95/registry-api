@@ -42,7 +42,7 @@ namespace RegistryApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CustomerPostRequest customerRequest)
         {
-            if (_customerService.ValideteDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
+            if (_customerService.ValidateDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
                 return BadRequest(new ErrorResponse
                 { StatusCode = HttpStatusCode.BadRequest, Description = "value duplicated", ErrorsMessages = _customerService.ErrorsMessages });
 
