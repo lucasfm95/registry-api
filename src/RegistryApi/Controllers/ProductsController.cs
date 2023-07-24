@@ -28,6 +28,12 @@ namespace RegistryApi.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] string id)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] ProductPostRequest productPostRequest)
         {
@@ -39,6 +45,11 @@ namespace RegistryApi.Controllers
             }
 
             return BadRequest();
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put([FromRoute] string id, [FromBody] ProductPutRequest productPutRequest)
+        {
+            return Ok();
         }
     }
 }

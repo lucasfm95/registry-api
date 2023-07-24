@@ -31,7 +31,7 @@ public class ProductRepository : IProductRepository
             throw;
         }
     }
-    public ProductData FindById(int id)
+    public ProductData FindById(string id)
     {
         try
         {
@@ -67,7 +67,7 @@ public class ProductRepository : IProductRepository
     {
         try
         {
-            var product = FindById(productData.Id);
+            var product = FindById(productData.Id ?? "");
 
             var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
 
@@ -84,7 +84,7 @@ public class ProductRepository : IProductRepository
         }
     }
 
-    public bool Delete(int id)
+    public bool Delete(string id)
     {
         try
         {
@@ -100,7 +100,7 @@ public class ProductRepository : IProductRepository
         }
     }
 
-    public bool Disable(int id, DateTime updatedAt)
+    public bool Disable(string id, DateTime updatedAt)
     {
         try
         {

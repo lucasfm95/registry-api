@@ -6,9 +6,9 @@ namespace RegistryApi.Repository.Interfaces;
 public interface IProductRepository
 {
     public List<ProductData> FindAll(PaginationRequest pagination);
-    public ProductData FindById(int id);
+    public ProductData FindById(string id);
     public ProductData Insert(ProductData productData);
     public ProductData Replace(ProductData productData);
-    public bool Delete(int id);
-    public bool Disable(int id, DateTime updatedAt);
+    public bool Delete(string id);
+    public bool Disable(string id, DateTime updatedAt);
 }

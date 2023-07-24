@@ -1,10 +1,16 @@
+using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using RegistryApi.Domain.Products.Request;
 
 namespace RegistryApi.Domain.Products.Data;
 
 public class ProductData
 {
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    [JsonIgnore]
+    public string? Id { get; set; }
     public string? Branch { get; set; }
     public string? Model { get; set; }
     public string? Description { get; set; }
