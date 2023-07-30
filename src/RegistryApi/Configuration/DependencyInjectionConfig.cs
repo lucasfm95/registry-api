@@ -4,6 +4,8 @@ using RegistryApi.Repository;
 using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
 using RegistryApi.Repository.Interfaces;
+using RegistryApi.Repository.Repositories;
+using RegistryApi.Repository.Repositories.Interfaces;
 
 namespace RegistryApi.Configuration
 {

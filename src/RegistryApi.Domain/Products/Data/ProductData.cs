@@ -11,6 +11,8 @@ public class ProductData
     [BsonRepresentation(BsonType.ObjectId)]
     [JsonIgnore]
     public string? Id { get; set; }
+    
+    public required int Code { get; set; }
     public string? Branch { get; set; }
     public string? Model { get; set; }
     public string? Description { get; set; }

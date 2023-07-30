@@ -5,7 +5,7 @@ using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
 using RegistryApi.Repository.Interfaces;
 
-namespace RegistryApi.Repository
+namespace RegistryApi.Repository.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {

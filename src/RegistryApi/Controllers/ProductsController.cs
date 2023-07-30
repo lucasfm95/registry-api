@@ -18,33 +18,33 @@ namespace RegistryApi.Controllers
         [HttpGet]
         public IActionResult GetAll([FromQuery] PaginationRequest pagination)
         {
-            var result = _productService.GetAll(pagination);
-
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-
-            return NoContent();
+            return Ok(_productService.GetAll(pagination));
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] string id)
+        [HttpGet("{code:int}")]
+        public IActionResult GetByCode([FromRoute] int code)
         {
-            return Ok();
+            var product = _productService.GetByCode(code);
+
+            if (product is null)
+            {
+                return NoContent();
+            }
+            
+            return Ok(product);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ProductPostRequest productPostRequest)
+        public IActionResult Post([FromBody] ProductPostRequest? productPostRequest)
         {
+            if (productPostRequest is null)
+            {
+                return BadRequest("Product is required");
+            }
+            
             var result = _productService.Add(productPostRequest);
 
-            if (result is not null)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest();
+            return Ok(result);
         }
         [HttpPut("{id}")]
         public IActionResult Put([FromRoute] string id, [FromBody] ProductPutRequest productPutRequest)
