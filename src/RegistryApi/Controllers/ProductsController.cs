@@ -46,10 +46,29 @@ namespace RegistryApi.Controllers
 
             return Ok(result);
         }
-        [HttpPut("{id}")]
-        public IActionResult Put([FromRoute] string id, [FromBody] ProductPutRequest productPutRequest)
+        
+        [HttpPut("{code:int}")]
+        public IActionResult Put([FromRoute] int code, [FromBody] ProductPutRequest productPutRequest)
         {
-            return Ok();
+            throw new NotImplementedException();
+        }
+        
+        [HttpPatch("{code:int}")]
+        public IActionResult Patch([FromRoute] int code, [FromBody] ProductPutRequest productPutRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete("{code:int}")]
+        public IActionResult Delete([FromRoute] int code)
+        {
+            throw new NotImplementedException();
+        }
+        
+        [HttpPatch("{code:int}/disable")]
+        public IActionResult Disable()
+        {
+            throw new NotImplementedException();
         }
     }
 }

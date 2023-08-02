@@ -86,7 +86,7 @@ namespace RegistryApi.Controllers
             return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to delete customer" });
         }
 
-        [HttpPatch("Disable/{documentNumber}")]
+        [HttpPatch("{documentNumber}/disable")]
         public IActionResult Disable([FromRoute] string documentNumber)
         {
             var result = _customerService.Disable(documentNumber);

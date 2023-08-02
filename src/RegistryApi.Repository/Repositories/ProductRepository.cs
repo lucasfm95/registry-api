@@ -97,9 +97,10 @@ public class ProductRepository : IProductRepository
             var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
 
             productData.Id = product?.Id;
+            productData.Code = product?.Code ?? 0;
             productData.CreatedAt = product?.CreatedAt ?? DateTime.Now;
 
-            collection.ReplaceOne(pdt => pdt.Id == productData.Id, productData);
+            collection.ReplaceOne(pdt => pdt.Code == productData.Code, productData);
 
             return productData;
         }
@@ -110,44 +111,47 @@ public class ProductRepository : IProductRepository
         }
     }
 
-    public bool Delete(string id)
+    public bool Update(ProductData productData)
     {
-        // try
-        // {
-        //     var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
-        //
-        //     var result = collection.DeleteOne(product => product.Id == id);
-        //
-        //     return result.DeletedCount > 0;
-        // }
-        // catch (Exception ex)
-        // {
-        //     Console.WriteLine(ex.Message);
-        //     throw;
-        // }
-        return true;
+        throw new NotImplementedException();
     }
 
-    public bool Disable(string id, DateTime updatedAt)
+    public bool Delete(int code)
     {
-        // try
-        // {
-        //     var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
-        //
-        //     var update = Builders<ProductData>.Update.Set(product => product.Enabled, false)
-        //         .Set(product => product.UpdatedAt, updatedAt);
-        //     var filter = Builders<ProductData>.Filter.Eq(product => product.Id, id);
-        //     var options = new UpdateOptions { IsUpsert = true };
-        //
-        //     var result = collection.UpdateOne(filter, update, options);
-        //
-        //     return result.ModifiedCount > 0;
-        // }
-        // catch (Exception ex)
-        // {
-        //     Console.WriteLine(ex.Message);
-        //     throw;
-        // }
-        return true;
+        try
+        {
+            var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
+        
+            var result = collection.DeleteOne(product => product.Code == code);
+        
+            return result.DeletedCount > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public bool Disable(int code, DateTime updatedAt)
+    {
+        try
+        {
+            var collection = _database.GetCollection<ProductData>(MongoDbSettings.ProductsCollectionName);
+        
+            var update = Builders<ProductData>.Update.Set(product => product.Enabled, false)
+                .Set(product => product.UpdatedAt, updatedAt);
+            var filter = Builders<ProductData>.Filter.Eq(product => product.Code, code);
+            var options = new UpdateOptions { IsUpsert = true };
+        
+            var result = collection.UpdateOne(filter, update, options);
+        
+            return result.ModifiedCount > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 }

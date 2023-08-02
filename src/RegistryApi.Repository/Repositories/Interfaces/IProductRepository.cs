@@ -10,6 +10,7 @@ public interface IProductRepository
     public int LastCodeInserted();
     public ProductData Insert(ProductData productData);
     public ProductData Replace(ProductData productData);
-    public bool Delete(string id);
-    public bool Disable(string id, DateTime updatedAt);
+    public bool Update(ProductData productData);
+    public bool Delete(int code);
+    public bool Disable(int code, DateTime updatedAt);
 }

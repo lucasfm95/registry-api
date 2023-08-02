@@ -59,4 +59,26 @@ public class ProductService : IProductService
         
         return new ProductResponse(result);
     }
+
+    public ProductResponse Replace(ProductPutRequest productPutRequest)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ProductResponse Update(ProductPatchRequest productPatchRequest)
+    {
+        //var productData = new ProductData(productPatchRequest);
+        
+        throw new NotImplementedException();
+    }
+
+    public bool Delete(int code)
+    {
+        return _productRepository.Delete(code);
+    }
+
+    public bool Disable(int code)
+    {
+        return _productRepository.Disable(code, DateTime.Now);
+    }
 }
