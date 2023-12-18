@@ -1,13 +1,23 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using RegistryApi.Domain.Customers.Requests;
+using RegistryApi.Domain.Customers.Request;
 using System.Text.Json.Serialization;
 
 namespace RegistryApi.Domain.Customers.Data
 {
     public class CustomerData
     {
-        public CustomerData()
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [JsonIgnore]
+        public string? Id { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? Name { get; set; }
+        public bool? Enabled { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        
+        protected CustomerData()
         {
 
         }
@@ -32,15 +42,5 @@ namespace RegistryApi.Domain.Customers.Data
             Name = customerRequest.Name;
             Enabled = customerRequest.Enabled;
         }
-
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        [JsonIgnore]
-        public string? Id { get; set; }
-        public string? DocumentNumber { get; set; }
-        public string? Name { get; set; }
-        public bool? Enabled { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }

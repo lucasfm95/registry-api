@@ -10,4 +10,16 @@
     <PackageReference Include="MongoDB.Bson" Version="2.20.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Customers\Request\Product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Customers\Request\Product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Customers\Request\Product\**" />
+  </ItemGroup>
+
 </Project>

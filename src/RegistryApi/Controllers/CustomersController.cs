@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistryApi.Core.Services.Interfaces;
-using RegistryApi.Domain.Customers.Requests;
 using RegistryApi.Domain.Request;
 using RegistryApi.Domain.Response;
 using System.Net;
+using RegistryApi.Domain.Customers.Request;
 
 namespace RegistryApi.Controllers
 {
@@ -23,9 +23,7 @@ namespace RegistryApi.Controllers
         [HttpGet]
         public IActionResult GetAll([FromQuery] PaginationRequest pagination)
         {
-            var customers = _customerService.GetAll(pagination);
-
-            return Ok(customers);
+            return Ok(_customerService.GetAll(pagination));
         }
 
         [HttpGet("{documentNumber}")]
@@ -42,7 +40,7 @@ namespace RegistryApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CustomerPostRequest customerRequest)
         {
-            if (_customerService.ValideteDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
+            if (_customerService.ValidateDuplicateDocumentNumber(customerRequest.DocumentNumber ?? ""))
                 return BadRequest(new ErrorResponse
                 { StatusCode = HttpStatusCode.BadRequest, Description = "value duplicated", ErrorsMessages = _customerService.ErrorsMessages });
 
@@ -88,7 +86,7 @@ namespace RegistryApi.Controllers
             return BadRequest(new ErrorResponse { StatusCode = HttpStatusCode.BadRequest, Description = "Error to delete customer" });
         }
 
-        [HttpPatch("Disable/{documentNumber}")]
+        [HttpPatch("{documentNumber}/disable")]
         public IActionResult Disable([FromRoute] string documentNumber)
         {
             var result = _customerService.Disable(documentNumber);

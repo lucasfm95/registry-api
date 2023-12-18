@@ -48,8 +48,10 @@ namespace RegistryApi.Controllers
             var result = _httpService.PostSync(path, JsonSerializer.Serialize(body));
 
             var response = await result.Content.ReadAsStringAsync();
-            
-            return Ok(response);
+
+            var responseObject = JsonSerializer.Deserialize<object>(response);
+
+            return Ok(responseObject);
         }
     }
 }

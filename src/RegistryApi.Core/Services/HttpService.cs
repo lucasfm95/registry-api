@@ -35,8 +35,9 @@ namespace RegistryApi.Core.Services
 
                 return _httpClient.Send(request);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }

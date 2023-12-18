@@ -3,5 +3,8 @@
 .vs
 /src/RegistryApi/Properties/launchSettings.json
 
+RegistryApi.sln.DotSettings.user
+
 .idea
 /RegistryApi.Tests/obj
+/RegistryApi.Tests/bin
