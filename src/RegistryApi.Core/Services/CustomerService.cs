@@ -3,6 +3,7 @@ using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Domain.Request;
+using RegistryApi.Repository;
 using RegistryApi.Repository.Interfaces;
 using System.Text.Json;
 
@@ -20,7 +21,11 @@ namespace RegistryApi.Core.Services
         }
         public List<CustomerResponse> GetAll(PaginationRequest pagination)
         {
-            var customersData = _customerRepository.FindAll(pagination);
+            var sqlServerRepository = new CustomerSqlRepository();
+
+            var customersData = sqlServerRepository.FindAll(pagination);
+
+            customersData.AddRange(_customerRepository.FindAll(pagination));
 
             return customersData.Select(customer => new CustomerResponse(customer)).ToList();
         }
