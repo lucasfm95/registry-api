@@ -23,7 +23,9 @@ namespace RegistryApi.Controllers
         [HttpGet]
         public IActionResult GetAll([FromQuery] PaginationRequest pagination)
         {
-            return Ok(_customerService.GetAll(pagination));
+            var customers = _customerService.GetAll(pagination);
+            
+            return Ok(customers);
         }
 
         [HttpGet("{documentNumber}")]

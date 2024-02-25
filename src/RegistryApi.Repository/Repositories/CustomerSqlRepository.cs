@@ -1,8 +1,8 @@
 ﻿using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Request;
-using RegistryApi.Repository.Interfaces;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using RegistryApi.Repository.Repositories.Interfaces;
 
 namespace RegistryApi.Repository;
 

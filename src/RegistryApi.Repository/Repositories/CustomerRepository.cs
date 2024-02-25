@@ -3,7 +3,7 @@ using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Request;
 using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
-using RegistryApi.Repository.Interfaces;
+using RegistryApi.Repository.Repositories.Interfaces;
 
 namespace RegistryApi.Repository.Repositories
 {

@@ -3,7 +3,6 @@ using RegistryApi.Core.Services.Interfaces;
 using RegistryApi.Repository;
 using RegistryApi.Repository.Factory;
 using RegistryApi.Repository.Factory.Interfaces;
-using RegistryApi.Repository.Interfaces;
 using RegistryApi.Repository.Repositories;
 using RegistryApi.Repository.Repositories.Interfaces;
 
@@ -24,7 +23,15 @@ namespace RegistryApi.Configuration
         public static IServiceCollection AddRepositoriesResolveDependencies(this IServiceCollection services)
         {
             services.AddSingleton<IMongoDbClientFactory, MongoDbClientFactory>();
-            services.AddSingleton<ICustomerRepository, CustomerRepository>();
+            if ((Environment.GetEnvironmentVariable("MAIN_DATABASE") ?? "mongodb").Equals("mongodb"))
+            {
+                services.AddSingleton<ICustomerRepository, CustomerRepository>();
+            }
+            else
+            {
+                services.AddSingleton<ICustomerRepository, CustomerSqlRepository>();
+            }
+            
             services.AddSingleton<IProductRepository, ProductRepository>();
             
             return services;
