@@ -3,8 +3,9 @@ using RegistryApi.Domain.Customers.Data;
 using RegistryApi.Domain.Customers.Request;
 using RegistryApi.Domain.Customers.Response;
 using RegistryApi.Domain.Request;
-using RegistryApi.Repository.Interfaces;
+using RegistryApi.Repository;
 using System.Text.Json;
+using RegistryApi.Repository.Repositories.Interfaces;
 
 namespace RegistryApi.Core.Services
 {
